@@ -5,7 +5,9 @@ import javax.money.Monetary;
 
 import org.javamoney.moneta.Money;
 
-
+/**
+ * Class storing default user preferences
+ */
 public class UserPreferences {
 	
 	private int attractionProximity = Integer.MAX_VALUE;
@@ -16,18 +18,19 @@ public class UserPreferences {
 	private int ticketQuantity = 1;
 	private int numberOfAdults = 1;
 	private int numberOfChildren = 0;
-	
+
+	// Remplacer par lombok getter et setter pour nettoyer
 	public UserPreferences() {
 	}
-	
+
 	public void setAttractionProximity(int attractionProximity) {
 		this.attractionProximity = attractionProximity;
 	}
-	
+
 	public int getAttractionProximity() {
 		return attractionProximity;
 	}
-	
+
 	public Money getLowerPricePoint() {
 		return lowerPricePoint;
 	}
@@ -43,7 +46,7 @@ public class UserPreferences {
 	public void setHighPricePoint(Money highPricePoint) {
 		this.highPricePoint = highPricePoint;
 	}
-	
+
 	public int getTripDuration() {
 		return tripDuration;
 	}
@@ -59,7 +62,7 @@ public class UserPreferences {
 	public void setTicketQuantity(int ticketQuantity) {
 		this.ticketQuantity = ticketQuantity;
 	}
-	
+
 	public int getNumberOfAdults() {
 		return numberOfAdults;
 	}

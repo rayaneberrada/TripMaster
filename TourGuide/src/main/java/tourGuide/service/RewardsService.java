@@ -39,7 +39,10 @@ public class RewardsService {
 	public void calculateRewards(User user) {
 		List<VisitedLocation> userLocations = user.getVisitedLocations();
 		List<Attraction> attractions = gpsUtil.getAttractions();
-		
+
+		// Pour chaque endroit visité, on vérfie pour toutes les attractions si l'utilisateur n'a pas dans sa liste de récompense déjà recu une récompense pour une attraction ayant ce nom
+		// Si ce n'est pas le cas, on vérifie si la localisation visitée est proche de l'attraction en utilisant nearAttraction()
+		// Si c'est le cas, on ajoute une récompense à la lsite de l'utilisateur qu'on calcule en utilisant RewardCentral
 		for(VisitedLocation visitedLocation : userLocations) {
 			for(Attraction attraction : attractions) {
 				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
@@ -59,7 +62,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
 	}
 	
-	private int getRewardPoints(Attraction attraction, User user) {
+	public int getRewardPoints(Attraction attraction, User user) {
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 	}
 	

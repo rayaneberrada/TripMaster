@@ -1,7 +1,10 @@
 package tourGuide;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import gpsUtil.location.Attraction;
+import gpsUtil.location.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +27,13 @@ public class TourGuideController {
     public String index() {
         return "Greetings from TourGuide!";
     }
-    
+
+    /**
+     * Return the last location or create a location to return for a user
+     *
+     * @param userName
+     * @return serialized last VisitedLocation
+     */
     @RequestMapping("/getLocation") 
     public String getLocation(@RequestParam String userName) {
     	VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
@@ -53,6 +62,10 @@ public class TourGuideController {
     
     @RequestMapping("/getAllCurrentLocations")
     public String getAllCurrentLocations() {
+        List<User> allUsers = tourGuideService.getAllUsers();
+        HashMap<UUID, Location> currentUsersLocation = new HashMap<>();
+        allUsers.stream().map(user -> currentUsersLocation.put(user.getUserId(), user.getLastVisitedLocation().location));
+
     	// TODO: Get a list of every user's most recent location as JSON
     	//- Note: does not use gpsUtil to query for their current location, 
     	//        but rather gathers the user's current location from their stored location history.
@@ -63,9 +76,15 @@ public class TourGuideController {
     	//        ...
     	//     }
     	
-    	return JsonStream.serialize("");
+    	return JsonStream.serialize(currentUsersLocation);
     }
-    
+
+    /**
+     * Return the list of traveling agencies with their price
+     *
+     * @param userName
+     * @return
+     */
     @RequestMapping("/getTripDeals")
     public String getTripDeals(@RequestParam String userName) {
     	List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));

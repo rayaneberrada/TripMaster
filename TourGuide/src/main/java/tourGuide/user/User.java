@@ -16,6 +16,7 @@ public class User {
 	private Date latestLocationTimestamp;
 	private List<VisitedLocation> visitedLocations = new ArrayList<>();
 	private List<UserReward> userRewards = new ArrayList<>();
+	// use the default value of UserPreferences
 	private UserPreferences userPreferences = new UserPreferences();
 	private List<Provider> tripDeals = new ArrayList<>();
 	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
