@@ -59,7 +59,7 @@ public class TourGuideService {
     addShutDownHook(); // add tracker to ShutDownHook
   }
 
-  public List<UserReward> getUserRewards(User user) {
+  public HashMap<String, UserReward> getUserRewards(User user) {
     return user.getUserRewards();
   }
 
@@ -106,7 +106,7 @@ public class TourGuideService {
 
   public List<Provider> getTripDeals(User user) {
     int cumulatativeRewardPoints =
-        user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
+        user.getUserRewards().values().stream().mapToInt(i -> i.getRewardPoints()).sum();
     List<Provider> providers =
         tripPricer.getPrice(
             tripPricerApiKey,

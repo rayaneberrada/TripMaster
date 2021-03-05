@@ -43,9 +43,8 @@ public class RewardsService {
 
   @Async
   public void calculateRewards(User user) throws ExecutionException, InterruptedException {
-    List<VisitedLocation> userLocations =
-        new CopyOnWriteArrayList<>(
-            user.getVisitedLocations()); // solution erreur de ConcurrentModificationException
+    List<VisitedLocation> userLocations = new CopyOnWriteArrayList<>(user.getVisitedLocations());
+    // un array ou CopyOnWriteArrayList
     List<Attraction> attractions = gpsUtil.getAttractions();
 
     // Pour chaque endroit visité, on vérfie pour toutes les attractions si l'utilisateur n'a pas
@@ -59,12 +58,13 @@ public class RewardsService {
     // l'utilisateur
     for (VisitedLocation visitedLocation : userLocations) {
       for (Attraction attraction : attractions) {
-        if (user.getUserRewards().stream()
+        if (user.getUserRewards().values().stream()
                 .filter(r -> r.attraction.attractionName.equals(attraction.attractionName))
                 .count()
             == 0) {
           if (nearAttraction(visitedLocation, attraction)) {
             user.addUserReward(
+                attraction.attractionName,
                 new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
           }
         }

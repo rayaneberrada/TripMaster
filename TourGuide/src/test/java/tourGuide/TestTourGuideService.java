@@ -73,7 +73,7 @@ public class TestTourGuideService {
     GpsUtil gpsUtil = new GpsUtil();
     RewardCentral rewardCentral = new RewardCentral();
     RewardsService rewardsService = new RewardsService(gpsUtil, rewardCentral);
-    InternalTestHelper.setInternalUserNumber(0);
+    InternalTestHelper.setInternalUserNumber(100);
     TourGuideService tourGuideService =
         new TourGuideService(gpsUtil, rewardsService, rewardCentral);
 
@@ -128,6 +128,7 @@ public class TestTourGuideService {
     assertEquals(5, attractions.size());
   }
 
+  @Test
   public void getTripDeals() {
     GpsUtil gpsUtil = new GpsUtil();
     RewardCentral rewardCentral = new RewardCentral();

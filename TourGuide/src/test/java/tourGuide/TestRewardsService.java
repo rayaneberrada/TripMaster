@@ -2,10 +2,7 @@ package tourGuide;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Before;
@@ -42,7 +39,8 @@ public class TestRewardsService {
     Attraction attraction = gpsUtil.getAttractions().get(0);
     user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
     tourGuideService.trackUserLocation(user);
-    List<UserReward> userRewards = user.getUserRewards();
+    rewardsService.calculateRewards(user);
+    HashMap<String, UserReward> userRewards = user.getUserRewards();
     tourGuideService.tracker.stopTracking();
     assertTrue(userRewards.size() == 1);
   }
@@ -55,7 +53,6 @@ public class TestRewardsService {
     assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
   }
 
-  @Ignore // Needs fixed - can throw ConcurrentModificationException
   @Test
   public void nearAllAttractions() throws ExecutionException, InterruptedException {
     GpsUtil gpsUtil = new GpsUtil();
@@ -67,8 +64,9 @@ public class TestRewardsService {
     TourGuideService tourGuideService =
         new TourGuideService(gpsUtil, rewardsService, rewardCentral);
 
+    rewardsService.setProximityBuffer(10000);
     rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
-    List<UserReward> userRewards =
+    HashMap<String, UserReward> userRewards =
         tourGuideService.getUserRewards(tourGuideService.getAllUsers().get(0));
     tourGuideService.tracker.stopTracking();
 

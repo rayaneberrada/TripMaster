@@ -48,7 +48,6 @@ public class TestPerformance {
    *          assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
    */
 
-  @Ignore
   @Test
   public void highVolumeTrackLocation() throws ExecutionException, InterruptedException {
     GpsUtil gpsUtil = new GpsUtil();
@@ -136,10 +135,6 @@ public class TestPerformance {
 
     for (User user : allUsers) {
       assertTrue(user.getUserRewards().size() > 0);
-      System.out.println(
-          user.getUserRewards()
-              .get(user.getUserRewards().size() - 1)
-              .getRewardPoints()); // Voir pq set async Reward ne fonctionne pas
     }
     stopWatch.stop();
     tourGuideService.tracker.stopTracking();
