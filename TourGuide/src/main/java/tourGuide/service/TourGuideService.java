@@ -152,7 +152,9 @@ public class TourGuideService {
           new NearByAttraction(attraction, visitedLocation.location, distanceToLocation, reward));
     }
     Collections.sort(nearbyAttractions);
-    return nearbyAttractions;
+    return nearbyAttractions.stream()
+        .limit(5)
+        .collect(Collectors.toList()); // retourne les 5 premiers éléments
   }
 
   /**
