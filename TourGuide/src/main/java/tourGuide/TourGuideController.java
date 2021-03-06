@@ -65,13 +65,7 @@ public class TourGuideController {
 
   @RequestMapping("/getAllCurrentLocations")
   public String getAllCurrentLocations() {
-    List<User> allUsers = tourGuideService.getAllUsers();
-    HashMap<UUID, Location> currentUsersLocation = new HashMap<>();
-    allUsers.stream()
-        .map(
-            user ->
-                currentUsersLocation.put(user.getUserId(), user.getLastVisitedLocation().location));
-
+    HashMap<UUID, Location> currentUsersLocation = tourGuideService.getAllUsersLocation();
     // TODO: Get a list of every user's most recent location as JSON
     // - Note: does not use gpsUtil to query for their current location,
     //        but rather gathers the user's current location from their stored location history.

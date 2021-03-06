@@ -93,6 +93,16 @@ public class TourGuideService {
     return new ArrayList<>(internalUserMap.values());
   }
 
+  public HashMap<UUID, Location> getAllUsersLocation() {
+    List<User> allUsers = getAllUsers();
+    HashMap<UUID, Location> currentUsersLocation = new HashMap<>();
+    allUsers.stream()
+        .map(
+            user ->
+                currentUsersLocation.put(user.getUserId(), user.getLastVisitedLocation().location));
+    return currentUsersLocation;
+  }
+
   /**
    * Add to internalUserMap a new user using it's username attribute as the key
    *
