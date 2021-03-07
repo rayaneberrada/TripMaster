@@ -32,6 +32,15 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
+    runtimeOnly group: 'org.springframework.cloud', name: 'spring-cloud-dependencies', version: 'Greenwich.RELEASE', ext: 'pom'
+
+// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.1.6.RELEASE'
+
+
+
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile group: 'org.javamoney', name: 'moneta', version: '1.3'
